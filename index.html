@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - แทนรัก จันทร์ลิ้ม (รัฐศาสตร์ มช.)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background-image: url('image (5).png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border-top: 6px solid #4A154B;
+            animation: containerFloat 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes containerFloat {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* เลเยอร์ทรานซิชั่นเส้นสีม่วงวิ่งตัดหน้าจอแบบเฟี้ยวๆ */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4A154B, #2b1b3d);
+            z-index: 9999;
+            pointer-events: none;
+            transition: none;
+        }
+
+        .page-transition-overlay.animate {
+            animation: swipeTransition 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes swipeTransition {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        .pol-banner {
+            background: linear-gradient(135deg, #4A154B, #2b1b3d);
+            color: #f3e5f5;
+            padding: 12px 25px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(74, 21, 75, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pol-banner::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,0.08), rgba(255,255,255,0));
+            transform: rotate(30deg);
+            animation: bannerShine 6s infinite linear;
+        }
+
+        @keyframes bannerShine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        .pol-banner span {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .scale-icon-banner {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            animation: scalePulse 3s infinite ease-in-out;
+        }
+
+        @keyframes scalePulse {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255,215,0,0.8)); }
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: pageFadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .header-title {
+            text-align: right;
+            font-size: 3rem;
+            font-weight: 600;
+            color: #2b1b3d;
+            margin-bottom: 15px;
+            font-style: italic;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+
+        .profile-sidebar {
+            text-align: center;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            margin-bottom: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-img:hover {
+            transform: scale(1.03) rotate(2deg);
+        }
+
+        .profile-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-quote {
+            font-size: 0.95rem;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .trophy-section {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .trophy-section p {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2b1b3d;
+        }
+
+        .trophy-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            padding: 10px;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .trophy-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,215,0,0.5) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .trophy-btn:hover::before {
+            opacity: 1;
+            animation: trophyGlow 1.5s infinite alternate;
+        }
+
+        @keyframes trophyGlow {
+            from { transform: scale(1); opacity: 0.6; }
+            to { transform: scale(1.25); opacity: 1; }
+        }
+
+        .trophy-btn:hover {
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .trophy-icon {
+            width: 85px;
+            height: 85px;
+            object-fit: contain;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 5px 8px rgba(0,0,0,0.15));
+        }
+
+        .info-box {
+            background: #fff;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+            position: relative;
+            border-left: 5px solid #4A154B;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .info-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(74, 21, 75, 0.1);
+        }
+
+        .box-title-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .purple-tag {
+            background-color: #4A154B;
+            color: white;
+            padding: 8px 22px;
+            border-radius: 20px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 4px 10px rgba(74, 21, 75, 0.25);
+        }
+
+        .purple-tag img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .info-box p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 10px;
+        }
+
+        .info-box ul {
+            list-style-type: none;
+            padding-left: 10px;
+        }
+
+        .info-box ul li {
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .info-box ul li:hover {
+            transform: translateX(5px);
+            color: #2b1b3d;
+        }
+
+        .nav-menu-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background-color: #fff;
+            color: #4A154B;
+            border: 2px solid #4A154B;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background-color: #4A154B;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 21, 75, 0.3);
+        }
+
+        .nav-btn.active-tab {
+            background-color: #4A154B;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(74, 21, 75, 0.30);
+        }
+
+        .certificates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .cert-row-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 750px;
+            border: 1px solid #eaeaea;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardAppear 0.6s ease backwards;
+        }
+
+        .cert-row-card:nth-child(1) { animation-delay: 0.1s; }
+        .cert-row-card:nth-child(2) { animation-delay: 0.2s; }
+        .cert-row-card:nth-child(3) { animation-delay: 0.3s; }
+        .cert-row-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cert-row-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-color: rgba(74, 21, 75, 0.3);
+        }
+
+        /* รูปภาพเพิ่มเอฟเฟกต์คลิกแล้วขยาย */
+        .cert-row-card img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            display: block;
+            cursor: zoom-in;
+            transition: transform 0.5s ease;
+        }
+
+        .cert-row-card img:hover {
+            transform: scale(1.01);
+        }
+
+        .cert-row-title {
+            padding: 22px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2b1b3d;
+            text-align: center;
+            background: #fff;
+        }
+
+        /* Modal สำหรับแสดงภาพขนาดใหญ่ */
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            object-fit: contain;
+            animation: zoomInImg 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes zoomInImg {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #e0b0ff;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 20px;
+            }
+            .header-title {
+                text-align: center;
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ไลน์สำหรับทำทรานซิชั่นเส้นสีม่วงวิ่งผ่านหน้าจอ -->
+    <div id="transitionOverlay" class="page-transition-overlay"></div>
+
+    <!-- Modal สำหรับขยายรูปภาพ -->
+    <div id="imageModal" class="image-modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" src="" alt="Expanded View">
+    </div>
+
+    <div class="container">
+
+        <!-- ================= PAGE 1: HOME ================= -->
+        <div id="home-page" class="page active">
+            <div class="pol-banner">
+                <span>
+                    <img src="rat.png" alt="Scale Icon" class="scale-icon-banner"> 
+                    Faculty of Political Science & Public Administration (International Relations)
+                </span>
+                <span>CMU Portfolio</span>
+            </div>
+
+            <h1 class="header-title">Portfolio</h1>
+            
+            <div class="content-grid">
+                <div class="profile-sidebar">
+                    <img src="IMG_20250106_211340_211.png" alt="Profile" class="profile-img">
+                    <div class="profile-name">นายแทนรัก จันทร์ลิ้ม</div>
+                    <div class="profile-quote">[It's now or never]</div>
+
+                    <div class="trophy-section">
+                        <p>ผลงานเกียรติบัตร</p>
+                        <button class="trophy-btn" onclick="switchPage('port1-page')">
+                            <img src="download (1).png" alt="Trophy" class="trophy-icon">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="content-main">
+                    <div class="info-box">
+                        <div class="box-title-container">
+                            <div class="purple-tag">
+                                <img src="download.png" alt="icon"> แนะนำตัว (About Me)
+                            </div>
+                        </div>
+                        <p>สวัสดีครับผมกำลังศึกษาอยู่ชั้น มัธยมศึกษาปีที่ 6 มีความสนใจในวัฒนธรรมต่างประเทศ มุ่งมั่นที่จะศึกษาต่อในระดับอุดมศึกษามหาวิทยาลัยเชียงใหม่คณะรัฐศาสตร์และรัฐประศาสนศาสตร์การระหว่างประเทศ</p>
+                        <ul>
+                            <li>🏫 โรงเรียน: [บ้านบึงอุตสาหกรรมนุเคราะห์]</li>
+                            <li>🧮 สายการเรียน: [MSEP]</li>
+                            <li>📊 เกรดเฉลี่ยสะสม (GPAX): [3.82]</li>
+                            <li>🎯 เป้าหมาย: ทำงานกับองค์กรระหว่างประเทศ (International Organizations)</li>
+                            <li>🎨 งานอดิเรก: ออกกำลังกาย 🏋️‍♂️, ฟังเพลง 🎶, เล่นเกม 🎮</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <div class="box-title-container">
+                            <div class="purple-tag">
+                                <img src="download.png" alt="icon"> สิ่งที่กำลังโฟกัส (Current Focus)
+                            </div>
+                        </div>
+                        <p>เป้าหมายและทักษะที่กำลังเร่งพัฒนาอย่างเข้มข้นในช่วงชั้น ม.6 เพื่อเตรียมความพร้อมสู่รั้วมหาวิทยาลัย</p>
+                        <ul>
+                            <li>💻 กำลังศึกษา: ภาษาต่างประเทศ วัฒนธรรมต่างประเทศ และพลวัตการเมืองโลก</li>
+                            <li>📖 กำลังเตรียมตัว: อ่านหนังสือสอบ TCAS และเรียบเรียงผลงานพอร์ตโฟลิโอ</li>
+                            <li>🌱 เป้าหมายระยะสั้น: มีสรีระร่างกายที่ดีขึ้นและวินัยในการอ่านหนังสือ</li>
+                            <li>⚡ สิ่งที่กำลังสนใจเพิ่มเติม: วิธีการผูกมิตรผูกไมตรีกับคนแปลกหน้าและการสื่อสารข้ามวัฒนธรรม</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 2: PORT 1 (ผลงานภายในห้องเรียน) ================= -->
+        <div id="port1-page" class="page">
+            <div class="nav-menu-bar">
+                <button class="nav-btn active-tab" onclick="switchPage('port1-page')">ผลงานภายในห้องเรียน</button>
+                <button class="nav-btn" onclick="switchPage('port2-page')">ผลงานภาษาต่างประเทศ</button>
+                <button class="nav-btn" onclick="switchPage('home-page')">กลับไปหน้าแรก</button>
+            </div>
+
+            <h2 style="color: #2b1b3d; margin-bottom: 10px; font-size: 1.8rem; text-align: center;">ผลงานภายในห้องเรียน</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">คลิกที่รูปภาพเพื่อดูภาพขนาดใหญ่</p>
+
+            <div class="certificates-list">
+                <div class="cert-row-card">
+                    <img src="92130.jpg" alt="ผลงานภายในห้องเรียน 1" onclick="openModal(this.src)">
+                    <div class="cert-row-title">ผลงานภายในห้องเรียน (1)</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="92131.jpg" alt="ผลงานภายในห้องเรียน 2" onclick="openModal(this.src)">
+                    <div class="cert-row-title">ผลงานภายในห้องเรียน (2)</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="92132.jpg" alt="ผลงานภายในห้องเรียน 3" onclick="openModal(this.src)">
+                    <div class="cert-row-title">ผลงานภายในห้องเรียน (3)</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= PAGE 3: PORT 2 (ผลงานภาษาต่างประเทศ) ================= -->
+        <div id="port2-page" class="page">
+            <div class="nav-menu-bar">
+                <button class="nav-btn" onclick="switchPage('port1-page')">ผลงานภายในห้องเรียน</button>
+                <button class="nav-btn active-tab" onclick="switchPage('port2-page')">ผลงานภาษาต่างประเทศ</button>
+                <button class="nav-btn" onclick="switchPage('home-page')">กลับไปหน้าแรก</button>
+            </div>
+
+            <h2 style="color: #2b1b3d; margin-bottom: 10px; font-size: 1.8rem; text-align: center;">ผลงานภาษาต่างประเทศ</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">คลิกที่รูปภาพเพื่อดูภาพขนาดใหญ่</p>
+
+            <div class="certificates-list">
+                <div class="cert-row-card">
+                    <img src="22-23 Eduploy crossword 2026.png" alt="Eduploy Crossword" onclick="openModal(this.src)">
+                    <div class="cert-row-title">Eduploy Crossword 2026</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="certificates แข่งขันเดี่ยว_page-0001.jpg" alt="แข่งขันเดี่ยว" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 34</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="เกียรติบัตร แทนรัก จันทร์ลิ้ม (1)_page-0001.jpg" alt="แทนรัก 1" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 49</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="เกียรติบัตร แทนรัก จันทร์ลิ้ม_page-0001.jpg" alt="แทนรัก 2" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 42</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // ฟังก์ชันเปลี่ยนหน้า พร้อมทำทรานซิชั่นเส้นสีม่วงวิ่งผ่าน
+        function switchPage(pageId) {
+            const overlay = document.getElementById('transitionOverlay');
+            
+            // เริ่มเล่นอนิเมชั่นเส้นวิ่ง
+            overlay.classList.add('animate');
+
+            // เปลี่ยนหน้าตอนที่เส้นวิ่งผ่านกึ่งกลางพอดี (300 มิลลิวินาที)
+            setTimeout(() => {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }, 300);
+
+            // เอาคลาสอนิเมชั่นออกหลังจากวิ่งจบ เพื่อให้พร้อมกดรอบถัดไป
+            setTimeout(() => {
+                overlay.classList.remove('animate');
+            }, 600);
+        }
+
+        // ฟังก์ชันเปิดดูรูปใหญ่
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = 'flex';
+            modalImg.src = imgSrc;
+        }
+
+        // ฟังก์ชันปิดรูปใหญ่
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
