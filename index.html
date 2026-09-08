@@ -608,4 +608,43 @@
     </div>
 
     <script>
-       
+        // ฟังก์ชันเปลี่ยนหน้า พร้อมทำทรานซิชั่นเส้นสีม่วงวิ่งผ่าน
+        function switchPage(pageId) {
+            const overlay = document.getElementById('transitionOverlay');
+            
+            // เริ่มเล่นอนิเมชั่นเส้นวิ่ง
+            overlay.classList.add('animate');
+
+            // เปลี่ยนหน้าตอนที่เส้นวิ่งผ่านกึ่งกลางพอดี (300 มิลลิวินาที)
+            setTimeout(() => {
+                const pages = document.querySelectorAll('.page');
+                pages.forEach(page => {
+                    page.classList.remove('active');
+                });
+                document.getElementById(pageId).classList.add('active');
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }, 300);
+
+            // เอาคลาสอนิเมชั่นออกหลังจากวิ่งจบ เพื่อให้พร้อมกดรอบถัดไป
+            setTimeout(() => {
+                overlay.classList.remove('animate');
+            }, 600);
+        }
+
+        // ฟังก์ชันเปิดดูรูปใหญ่
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = 'flex';
+            modalImg.src = imgSrc;
+        }
+
+        // ฟังก์ชันปิดรูปใหญ่
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    </script>
+
+</body>
+</html>
