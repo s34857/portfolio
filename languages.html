@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ผลงานภาษาต่างประเทศ - แทนรัก จันทร์ลิ้ม</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        body {
+            background-image: url('image (5).png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            border-top: 6px solid #4A154B;
+            animation: containerFloat 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes containerFloat {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #4A154B, #2b1b3d);
+            z-index: 9999;
+            pointer-events: none;
+            transition: none;
+        }
+
+        .page-transition-overlay.animate {
+            animation: swipeTransition 0.6s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+        }
+
+        @keyframes swipeTransition {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        .page {
+            display: block;
+            animation: pageFadeIn 0.5s ease-out forwards;
+        }
+
+        @keyframes pageFadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .nav-menu-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background-color: #fff;
+            color: #4A154B;
+            border: 2px solid #4A154B;
+            padding: 10px 22px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            background-color: #4A154B;
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(74, 21, 75, 0.3);
+        }
+
+        .nav-btn.active-tab {
+            background-color: #4A154B;
+            color: #fff;
+            box-shadow: 0 6px 15px rgba(74, 21, 75, 0.30);
+        }
+
+        .certificates-list {
+            display: flex;
+            flex-direction: column;
+            gap: 35px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .cert-row-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            width: 100%;
+            max-width: 750px;
+            border: 1px solid #eaeaea;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: cardAppear 0.6s ease backwards;
+        }
+
+        .cert-row-card:nth-child(1) { animation-delay: 0.1s; }
+        .cert-row-card:nth-child(2) { animation-delay: 0.2s; }
+        .cert-row-card:nth-child(3) { animation-delay: 0.3s; }
+        .cert-row-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .cert-row-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+            border-color: rgba(74, 21, 75, 0.3);
+        }
+
+        .cert-row-card img {
+            width: 100%;
+            height: auto;
+            max-height: 500px;
+            object-fit: contain;
+            background: #f9f9f9;
+            border-bottom: 1px solid #eee;
+            display: block;
+            cursor: zoom-in;
+            transition: transform 0.5s ease;
+        }
+
+        .cert-row-card img:hover {
+            transform: scale(1.01);
+        }
+
+        .cert-row-title {
+            padding: 22px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2b1b3d;
+            text-align: center;
+            background: #fff;
+        }
+
+        .image-modal {
+            display: none;
+            position: fixed;
+            z-index: 10000;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            padding: 30px;
+            animation: modalFadeIn 0.3s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .image-modal img {
+            max-width: 90%;
+            max-height: 85vh;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            object-fit: contain;
+            animation: zoomInImg 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes zoomInImg {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 40px;
+            font-weight: 300;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close:hover {
+            color: #e0b0ff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="transitionOverlay" class="page-transition-overlay"></div>
+
+    <div id="imageModal" class="image-modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modalImg" src="" alt="Expanded View">
+    </div>
+
+    <div class="container">
+        <div id="port2-page" class="page">
+            <div class="nav-menu-bar">
+                <a href="portfolio.html" class="nav-btn" onclick="navigateTo(event, 'portfolio.html')">ผลงานภายในห้องเรียน</a>
+                <a href="languages.html" class="nav-btn active-tab" onclick="navigateTo(event, 'languages.html')">ผลงานภาษาต่างประเทศ</a>
+                <a href="activities.html" class="nav-btn" onclick="navigateTo(event, 'activities.html')">รูปภาพขณะทำกิจกรรม</a>
+                <a href="index.html" class="nav-btn" onclick="navigateTo(event, 'index.html')">กลับไปหน้าแรก</a>
+            </div>
+
+            <h2 style="color: #2b1b3d; margin-bottom: 10px; font-size: 1.8rem; text-align: center;">ผลงานภาษาต่างประเทศ</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">คลิกที่รูปภาพเพื่อดูภาพขนาดใหญ่</p>
+
+            <div class="certificates-list">
+                <div class="cert-row-card">
+                    <img src="22-23 Eduploy crossword 2026.png" alt="Eduploy Crossword" onclick="openModal(this.src)">
+                    <div class="cert-row-title">Eduploy Crossword 2026</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="certificates แข่งขันเดี่ยว_page-0001.jpg" alt="แข่งขันเดี่ยว" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 34</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="เกียรติบัตร แทนรัก จันทร์ลิ้ม (1)_page-0001.jpg" alt="แทนรัก 1" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 49</div>
+                </div>
+
+                <div class="cert-row-card">
+                    <img src="เกียรติบัตร แทนรัก จันทร์ลิ้ม_page-0001.jpg" alt="แทนรัก 2" onclick="openModal(this.src)">
+                    <div class="cert-row-title">เกียรติบัตรการแข่งขันครอสเวิร์ดเกม เกมต่อภาษาอังกฤษ อันดับที่ 42</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(event, url) {
+            event.preventDefault();
+            const overlay = document.getElementById('transitionOverlay');
+            overlay.classList.add('animate');
+            setTimeout(() => {
+                window.location.href = url;
+            }, 300);
+        }
+
+        function openModal(imgSrc) {
+            const modal = document.getElementById('imageModal');
+            const modalImg = document.getElementById('modalImg');
+            modal.style.display = 'flex';
+            modalImg.src = imgSrc;
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('imageModal');
+            modal.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
